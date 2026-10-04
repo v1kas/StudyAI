@@ -14,7 +14,7 @@ public class DocumentStudyController {
     public DocumentStudyController(StudySessionService studySessionService) { this.studySessionService = studySessionService; }
 
     @GetMapping("/api/v1/documents/{documentId}/study-summary")
-    public StudySummaryResponse getSummary(@PathVariable UUID documentId) {
+    public StudySummaryResponse getSummary(@PathVariable(value = "documentId") UUID documentId) {
         return studySessionService.getSummaryByDocumentId(documentId);
     }
 }

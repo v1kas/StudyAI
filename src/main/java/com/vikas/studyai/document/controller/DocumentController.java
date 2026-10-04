@@ -36,12 +36,12 @@ public class DocumentController {
     public List<DocumentResponse> getAll() { return documentService.getAll(); }
 
     @GetMapping("/{id}")
-    public DocumentResponse getById(@PathVariable UUID id) { return documentService.getById(id); }
+    public DocumentResponse getById(@PathVariable(value = "id") UUID id) { return documentService.getById(id); }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable UUID id) { documentService.delete(id); }
+    public void delete(@PathVariable(value = "id") UUID id) { documentService.delete(id); }
 
     @GetMapping("/{id}/status")
-    public DocumentStatusResponse getStatus(@PathVariable UUID id) { return documentService.getStatus(id); }
+    public DocumentStatusResponse getStatus(@PathVariable(value = "id") UUID id) { return documentService.getStatus(id); }
 }

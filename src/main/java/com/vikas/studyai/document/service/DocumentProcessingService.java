@@ -18,8 +18,16 @@ public class DocumentProcessingService {
     @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void process(DocumentUploadedEvent event) {
+        long startedNanos = System.nanoTime();
         log.info("event=DOCUMENT_PROCESSING_STARTED documentId={}", event.documentId());
-        ragService.indexDocument(event.documentId());
-        log.info("event=DOCUMENT_PROCESSING_FINISHED documentId={}", event.documentId());
+        try {
+            ragService.indexDocument(event.documentId());
+            log.info("event=DOCUMENT_PROCESSING_FINISHED documentId={} durationMs={}", event.documentId(),
+                    (System.nanoTime() - startedNanos) / 1_000_000);
+        } catch (RuntimeException exception) {
+            log.error("event=DOCUMENT_PROCESSING_FAILED documentId={} durationMs={}", event.documentId(),
+                    (System.nanoTime() - startedNanos) / 1_000_000, exception);
+            throw exception;
+        }
     }
 }

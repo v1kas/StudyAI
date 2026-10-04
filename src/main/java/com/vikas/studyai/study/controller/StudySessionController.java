@@ -17,5 +17,5 @@ public class StudySessionController {
     @PostMapping @ResponseStatus(HttpStatus.CREATED)
     public StudySessionResponse create(@Valid @RequestBody CreateStudySessionRequest request) { return studySessionService.create(request); }
     @GetMapping("/{id}")
-    public StudySessionResponse get(@PathVariable UUID id) { return studySessionService.getById(id); }
+    public StudySessionResponse get(@PathVariable(value = "id") UUID id) { return studySessionService.getById(id); }
 }

@@ -1,11 +1,16 @@
 package com.vikas.studyai.document.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
 @Table(name = "documents")
+@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class StudyDocument {
     @Id @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -26,21 +31,11 @@ public class StudyDocument {
     @Column(columnDefinition = "text")
     private String errorMessage;
 
-    protected StudyDocument() { }
     public StudyDocument(String fileName, String filePath, long fileSize) {
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileSize = fileSize;
     }
-    public UUID getId() { return id; }
-    public String getFileName() { return fileName; }
-    public String getFilePath() { return filePath; }
-    public long getFileSize() { return fileSize; }
-    public Integer getPageCount() { return pageCount; }
-    public DocumentStatus getStatus() { return status; }
-    public Instant getCreatedAt() { return createdAt; }
-    public Instant getUpdatedAt() { return updatedAt; }
-    public String getErrorMessage() { return errorMessage; }
     public void setStatus(DocumentStatus status) { this.status = status; this.updatedAt = Instant.now(); }
     public void setPageCount(Integer pageCount) { this.pageCount = pageCount; this.updatedAt = Instant.now(); }
     public void setProcessingError(String errorMessage) { this.errorMessage = errorMessage; this.updatedAt = Instant.now(); }

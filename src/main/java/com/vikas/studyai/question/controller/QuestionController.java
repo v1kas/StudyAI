@@ -24,14 +24,14 @@ public class QuestionController {
 
     @PostMapping("/api/v1/documents/{documentId}/questions")
     @ResponseStatus(HttpStatus.CREATED)
-    public QuestionGenerationResponse generate(@PathVariable UUID documentId,
+    public QuestionGenerationResponse generate(@PathVariable(value = "documentId") UUID documentId,
                                                @Valid @RequestBody QuestionGenerationRequest request) {
         return questionService.generate(documentId, request);
     }
 
     @GetMapping("/api/v1/documents/{documentId}/questions")
-    public List<QuestionResponse> getByDocument(@PathVariable UUID documentId) { return questionService.findByDocumentId(documentId); }
+    public List<QuestionResponse> getByDocument(@PathVariable(value = "documentId") UUID documentId) { return questionService.findByDocumentId(documentId); }
 
     @GetMapping("/api/v1/questions/{id}")
-    public QuestionResponse getById(@PathVariable UUID id) { return questionService.getById(id); }
+    public QuestionResponse getById(@PathVariable(value = "id") UUID id) { return questionService.getById(id); }
 }
